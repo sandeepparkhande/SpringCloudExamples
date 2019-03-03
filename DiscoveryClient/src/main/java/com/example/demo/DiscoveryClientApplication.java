@@ -28,11 +28,12 @@ public class DiscoveryClientApplication {
 		SpringApplication.run(DiscoveryClientApplication.class, args);
 	}
 	
-	@RequestMapping("/tradeEureka")
+	@RequestMapping("/accountDiscoveryEureka")
 	public String home() {
 		RestTemplate restTemplate=builder.build();
-		InstanceInfo instanceInfo=client.getNextServerFromEureka("TradeService", false);
+		InstanceInfo instanceInfo=client.getNextServerFromEureka("AccountService", false);
 		String baseURL=instanceInfo.getHomePageUrl();
+		baseURL=baseURL.concat("/account");
 		ResponseEntity<String> response=restTemplate.getForEntity(baseURL,String.class);
 		return response.getBody();
 	}

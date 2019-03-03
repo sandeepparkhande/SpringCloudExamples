@@ -9,20 +9,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-@RestController
 @EnableDiscoveryClient
 public class ConfigClientApplication {
 
-	@Value("${msg}")
-	private String source;
-	
 	public static void main(String[] args) {
 		SpringApplication.run(ConfigClientApplication.class, args);
 	}
 	
-	@RequestMapping("/configClientHome")
-	@RefreshScope
-	public String  clientConfigHome() {
-		return source;
-	}
+}
+
+@RefreshScope
+@RestController
+class MessageRestController {
+
+    @Value("${msg:Hello default}")
+    private String message;
+
+    @RequestMapping("/message")
+    String getMessage() {
+        return this.message;
+    }
 }
